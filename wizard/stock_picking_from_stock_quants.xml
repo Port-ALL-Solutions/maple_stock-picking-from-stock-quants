@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="stock_picking_from_stock_quants_view">
+            <field name="name">Create Stock Picking from Quants</field>
+            <field name="model">stock.picking_from_quants</field>
+                <field name="arch" type="xml">
+                    <form string="Create Stock Picking from Quants">
+                    	<sheet>
+                    		<group><h1>Stock Picking</h1></group>
+                    		<group>
+	                            <field name="maple_producer" readonly="1"/>
+  	                            <field name="partner_street" readonly="1"/>
+  	                            <field name="partner_city" readonly="1"/>
+  	                            <field name="partner_state" readonly="1"/>
+  	                            <field name="partner_region" readonly="1"/>
+                    		</group>
+                    		<group>
+	                            <field name="picking_type_id"/>
+                    		</group>
+                    		<group>
+	                            <field name="date_planed"/>
+	                            <field name="note"/>
+                    		</group>
+                    		<group>
+	                            <field name="related_ids"/>
+                    		</group>
+	                        <footer>
+	                            <button string="Create" name="action_create_picking_from_quants" type="object" class="oe_highlight"/>
+	                            or
+	                            <button string="Cancel" class="oe_link" special="cancel"/>
+	                        </footer>                    		
+                        </sheet>
+                    </form>
+                </field>
+        </record>
+
+        <act_window id="action_create_picking_from_quant"
+            multi="True" view_id="stock_picking_from_stock_quants_view"
+            key2="client_action_multi" name="Create Picking"
+            res_model="stock.picking_from_quants" src_model="stock.quant"
+            view_mode="form" target="new" view_type="form" />
+
+        <act_window id="action_add_quant_to_picking"
+            multi="True"
+            key2="client_action_multi" name="Add to picking"
+            res_model="stock.picking_from_quants" src_model="stock.quant"
+            view_mode="form" target="new" view_type="form" />
+
+
+   </data>
+</openerp>
