@@ -2,6 +2,7 @@
 from openerp import models, fields, api, _
 from datetime import date
 from odoo.exceptions import UserError
+from numpy.dual import pinv
 
 class PickingFromQuantsWizard(models.TransientModel):
     _name = 'stock.picking_from_quants'
@@ -133,7 +134,7 @@ class PickingFromQuantsWizard(models.TransientModel):
              raise UserError(_("More than one locations."))
 
         picking_vals = {
-            'origin': "Manualy created",
+            'origin': "Manually created",
             'partner_id': False,
             'date_done': self.date_planed,
             'picking_type_id': self.picking_type_id.id,
@@ -172,6 +173,13 @@ class PickingFromQuantsWizard(models.TransientModel):
                 quants = quant_obj.quants_get_preferred_domain(lot.qty, move, lot_id=lot.lot_id.id)
 #                quants = quant_obj.quants_get_preferred_domain(lot.qty, move, ops=ops, lot_id=lot.lot_id, domain=domain, preferred_domain_list=[])
                 lot.quants_reserve(quants, move)
+        
+        ops = picking.pack_operation_product_ids
+        ops_lots = ops.pack_lot_ids
+        x = 0
+        for lot in ops_lots:
+            lot.write({'lot_id': selected_lots[x].lot_id.id})
+            x += 1
 
 #        move.quants_unreserve()
 #        operation = operation__obj.browse(picking.pack_operation_product_ids)
