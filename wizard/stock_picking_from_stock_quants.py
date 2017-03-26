@@ -175,6 +175,7 @@ class PickingFromQuantsWizard(models.TransientModel):
                 lot.quants_reserve(quants, move)
         
         ops = picking.pack_operation_product_ids
+        ops.write({'owner_id': partners[0].id})
         ops_lots = ops.pack_lot_ids
         x = 0
         for lot in ops_lots:
