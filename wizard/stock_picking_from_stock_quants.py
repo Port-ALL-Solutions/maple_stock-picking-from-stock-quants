@@ -150,7 +150,7 @@ class PickingFromQuantsWizard(models.TransientModel):
         move_vals= {
             'picking_id': picking.id,
             'product_id': products[0],
-            'name': "Manualy created",
+            'name': "Manually created",
             'product_uom_qty' : quantity,
             'product_uom' : product.uom_id.id,
             'location_id': locations[0],
