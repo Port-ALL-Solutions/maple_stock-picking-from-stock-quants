@@ -150,7 +150,7 @@ class PickingFromQuantsWizard(models.TransientModel):
         move_vals= {
             'picking_id': picking.id,
             'product_id': products[0],
-            'name': "Manualy created",
+            'name': "Manually created",
             'product_uom_qty' : quantity,
             'product_uom' : product.uom_id.id,
             'location_id': locations[0],
@@ -175,7 +175,7 @@ class PickingFromQuantsWizard(models.TransientModel):
                 lot.quants_reserve(quants, move)
         
         ops = picking.pack_operation_product_ids
-        ops.write({'owner_id': partners[0].id})
+        ops.write({'owner_id': partners[0]})
         ops_lots = ops.pack_lot_ids
         x = 0
         for lot in ops_lots:
