@@ -2,7 +2,6 @@
 from openerp import models, fields, api, _
 from datetime import date
 from odoo.exceptions import UserError
-from numpy.dual import pinv
 
 class PickingFromQuantsWizard(models.TransientModel):
     _name = 'stock.picking_from_quants'
