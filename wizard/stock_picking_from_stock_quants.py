@@ -14,15 +14,21 @@ class PickingFromQuantsWizard(models.TransientModel):
 #        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]}
         )
     
+    fixed_destination = fields.Boolean(
+        string='Fixed destination',
+        related='picking_type_id.fixed_destination',
+        )
+    
     location_dest_id = fields.Many2one(
-        'stock.location', "Destination Location Zone",
-        default=lambda self: self.env['stock.picking.type'].browse(self._context.get('default_picking_type_id')).default_location_dest_id,
+        'stock.location', 
+        "Destination Location Zone",
+        required=True,        
 #        states={'draft': [('readonly', False)]}
         )
         
     maple_producer = fields.Many2one(
         comodel_name='res.partner',
-        string= 'Producer',
+        compute='_compute_producer',
         help="Producer. "
         )
 
@@ -79,14 +85,16 @@ class PickingFromQuantsWizard(models.TransientModel):
 
     note = fields.Text('Internal Notes')
 
-
-    @api.onchange('maple_producer')
-    def _compute_related(self):
+    @api.onchange('related_ids')
+    def _compute_producer(self):
         context = dict(self._context or {})
         active_ids = context.get('active_ids', []) or []
-        if active_ids:
-            quants_selected = self.env['stock.quant'].browse(active_ids)
+        self.maple_producer = self.env['stock.quant'].browse(active_ids[0]).owner_id
 
+
+    @api.onchange('picking_type_id')
+    def _compute_related_destination(self):
+        self.location_dest_id = self.picking_type_id.default_location_dest_id
 
     @api.onchange('maple_producer')
     def _compute_related(self):

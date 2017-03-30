@@ -84,6 +84,8 @@ class stockLocation(models.Model):
                 if line.product_id.type == 'product':
                     qty += line.product_qty          
             record.qty_purchased = qty
+
+
   
     @api.depends('stock_lines','stock_lines.owner_id','stock_lines.qty')
     def _compute_stock(self):
