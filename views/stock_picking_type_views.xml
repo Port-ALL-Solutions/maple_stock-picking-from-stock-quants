@@ -2,15 +2,17 @@
 <odoo>
 	<data>
 	
-    	<record id="maple_partner_view_region" model="ir.ui.view">
-      		<field name="name">maple.partner_view</field>
-      		<field name="model">res.partner</field>
-      		<field name="priority" eval="1"/>
-      		<field name="inherit_id" ref="base.view_partner_form"/>
+    	<record id="view_picking_type_form" model="ir.ui.view">
+      		<field name="name">picking_from_quants.view_picking_type_form</field>
+      		<field name="model">stock.picking.type</field>
+      		<field name="priority" eval="16"/>
+      		<field name="inherit_id" ref="stock.view_picking_type_form"/>
       		<field name="arch" type="xml">
-        		<xpath expr="//group[@string='Locations']" position="after">
-                    <group string="Origin validation">
-                        <field name="single_origin" attrs="{'required': [('code', '=', 'internal')]}"/>
+        		<xpath expr="//sheet" position="inside">
+                    <group string="Validations">
+                        <field name="single_origin" />
+                        <field name="fixed_origin" />
+                        <field name="fixed_destination" />
                     </group>
         		</xpath>
       		</field>

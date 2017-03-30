@@ -2,18 +2,24 @@
 from openerp import models, fields, api, _
 from datetime import date
 from odoo.exceptions import UserError
-from numpy.dual import pinv
 
 class PickingFromQuantsWizard(models.TransientModel):
     _name = 'stock.picking_from_quants'
 #    _inherit = 'purchase.order'
 
-    note = fields.Text('Internal Notes')
     
     picking_type_id = fields.Many2one(
         'stock.picking.type', 'Picking Type',
+        required=True,
+#        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]}
         )
     
+    location_dest_id = fields.Many2one(
+        'stock.location', "Destination Location Zone",
+        default=lambda self: self.env['stock.picking.type'].browse(self._context.get('default_picking_type_id')).default_location_dest_id,
+#        states={'draft': [('readonly', False)]}
+        )
+        
     maple_producer = fields.Many2one(
         comodel_name='res.partner',
         string= 'Producer',
@@ -70,6 +76,9 @@ class PickingFromQuantsWizard(models.TransientModel):
         string= 'Quants',
         help="Qaunts. "
         )
+
+    note = fields.Text('Internal Notes')
+
 
     @api.onchange('maple_producer')
     def _compute_related(self):

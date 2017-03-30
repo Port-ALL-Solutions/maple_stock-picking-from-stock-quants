@@ -8,6 +8,18 @@ class stockPickingType(models.Model):
 
     single_origin = fields.Boolean(
         string='One origin',
-        help='If check, this type of picking allow only from same origin. ',
+        help='If check, this type of picking allow only from same origin (partner). ',
+        default=False
+        )    
+
+    fixed_origin = fields.Boolean(
+        string='Fixed origin',
+        help='If check, this type of picking will not allow you to change the origin. ',
+        default=False
+        )    
+
+    fixed_destination = fields.Boolean(
+        string='Fixed destination',
+        help='If check, this type of picking will not allow you to change the destination. ',
         default=False
         )    

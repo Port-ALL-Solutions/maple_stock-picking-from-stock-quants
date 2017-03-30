@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+	    <record id="view_stock_quant_tree" model="ir.ui.view">
+			<field name="name">picking_from_quants.view_stock_quant_tree</field>
+		    <field name="model">stock.quant</field>
+		    <field name="arch" type="xml">
+
+				<tree string="Inventory Valuation" create="0" delete="0">
+			        <field name="product_id"/>
+			        <field name="qty"/>
+			        <field name="product_uom_id" groups="product.group_uom"/>
+			        <field name="location_id"/>
+			        <field name="owner_id" groups="stock.group_tracking_owner"/>
+			        <field name="lot_id" groups="stock.group_production_lot"/>
+			        <field name="package_id" groups="stock.group_tracking_lot"/>
+			        <field name="packaging_type_id" invisible="1"/>
+			        <field name="in_date"/>
+			        <field name="inventory_value"/>
+			        <field name="reservation_id" invisible="1"/>
+			        <field name="propagated_from_id" invisible="1"/>
+			        <field name="company_id" groups="base.group_multi_company"/>
+			    </tree>
+			    
+			</field>
+		</record>	
+	
+        <record model="ir.actions.act_window" id="quants_list_action">
+            <field name="name">Quant List</field>
+            <field name="res_model">stock.quant</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_id" ref="view_stock_quant_tree" />            
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Can not add from here</p>
+            </field>
+        </record>   	
+    		
+        <menuitem id="quant_list"
+        	name="Quant List"
+        	parent="maple.maple_config_menu"
+            action="quants_list_action"/>	
+	
+	
+	</data>
+</odoo>

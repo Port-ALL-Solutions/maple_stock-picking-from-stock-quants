@@ -10,18 +10,19 @@
                     	<sheet>
                     		<group><h1>Stock Picking</h1></group>
                     		<group>
+	                            <field name="picking_type_id"/>
+	                            <field name="location_dest_id"/>
+                    		</group>
+                    		<group>
+	                            <field name="date_planed"/>
+	                            <field name="note"/>
+                    		</group>
+                    		<group>
 	                            <field name="maple_producer" readonly="1"/>
   	                            <field name="partner_street" readonly="1"/>
   	                            <field name="partner_city" readonly="1"/>
   	                            <field name="partner_state" readonly="1"/>
   	                            <field name="partner_region" readonly="1"/>
-                    		</group>
-                    		<group>
-	                            <field name="picking_type_id"/>
-                    		</group>
-                    		<group>
-	                            <field name="date_planed"/>
-	                            <field name="note"/>
                     		</group>
                     		<group>
 	                            <field name="related_ids"/>
