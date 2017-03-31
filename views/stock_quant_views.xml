@@ -37,6 +37,7 @@
             </field>
         </record>   	
     		
+ 		
         <menuitem id="quant_list"
         	name="Quant List"
         	parent="maple.maple_config_menu"

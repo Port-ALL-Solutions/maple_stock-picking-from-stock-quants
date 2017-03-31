@@ -3,16 +3,35 @@ from openerp import models, fields, api, _
 from datetime import date
 from odoo.exceptions import UserError
 
-class PickingFromQuantsWizard(models.TransientModel):
-    _name = 'stock.picking_from_quants'
-#    _inherit = 'purchase.order'
+class PickingFromQuantsWizardLines(models.TransientModel):
+    _name = 'stock.picking_from_quants.lines'
 
+    quant_id = fields.Many2one(
+        'stock.quant', 
+        'Product selected',
+        )
+            # generic error checking
+
+    quant_serial = fields.Char(
+        string='Serial',
+        related='quant_id.lot_id.name'
+        )
     
+    picking_from_quant_id = fields.Many2one('stock.picking_from_quants', string='Quants')
+          
+class PickingFromQuantsWizard(models.TransientModel):
+    _name = 'stock.picking_from_quants'        # generic error checking
+
+    quants_line = fields.One2many('stock.picking_from_quants.lines', 'picking_from_quant_id', string='Quants Lines')
+
     picking_type_id = fields.Many2one(
-        'stock.picking.type', 'Picking Type',
-        required=True,
+        'stock.picking.type', 
+        'Picking Type',
+#        required=True,
 #        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]}
         )
+
+
     
     fixed_destination = fields.Boolean(
         string='Fixed destination',
@@ -22,7 +41,14 @@ class PickingFromQuantsWizard(models.TransientModel):
     location_dest_id = fields.Many2one(
         'stock.location', 
         "Destination Location Zone",
-        required=True,        
+ #       required=True,        
+#        states={'draft': [('readonly', False)]}
+        )
+        
+    location_source_id = fields.Many2one(
+        'stock.location', 
+        "Source Location Zone",
+ #       required=True,        
 #        states={'draft': [('readonly', False)]}
         )
         
@@ -101,6 +127,11 @@ class PickingFromQuantsWizard(models.TransientModel):
         context = dict(self._context or {})
         active_ids = context.get('active_ids', []) or []
         
+        quants = self.env['stock.quant'].browse(active_ids)
+        
+        for q in quants:
+            self.env['stock.picking_from_quants.lines'].create({'quant_id':q.id})
+        
         self.related_ids =  ''.join(str(e) for e in active_ids)
 
     @api.multi
@@ -120,7 +151,8 @@ class PickingFromQuantsWizard(models.TransientModel):
 
         partners = []
         locations = []
-        products = []
+        products = []        # generic error checking
+
         quantity = 0.
 
         for record in self.env['stock.quant'].browse(active_ids):
