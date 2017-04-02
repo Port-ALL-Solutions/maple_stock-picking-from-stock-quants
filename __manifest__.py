@@ -19,7 +19,6 @@ Add action add_to_picking.
         'maple',
     ],
     'data': [
-        "views/stock_location_views.xml",
         "wizard/stock_picking_from_stock_quants.xml"
     ],
     'qweb': [
