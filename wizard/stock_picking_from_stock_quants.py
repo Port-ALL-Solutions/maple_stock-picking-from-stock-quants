@@ -3,19 +3,58 @@ from openerp import models, fields, api, _
 from datetime import date
 from odoo.exceptions import UserError
 
-class PickingFromQuantsWizard(models.TransientModel):
-    _name = 'stock.picking_from_quants'
-#    _inherit = 'purchase.order'
+class PickingFromQuantsWizardLines(models.TransientModel):
+    _name = 'stock.picking_from_quants.lines'
 
-    note = fields.Text('Internal Notes')
-    
-    picking_type_id = fields.Many2one(
-        'stock.picking.type', 'Picking Type',
+    quant_id = fields.Many2one(
+        'stock.quant', 
+        'Product selected',
+        )
+            # generic error checking
+
+    quant_serial = fields.Char(
+        string='Serial',
+        related='quant_id.lot_id.name'
         )
     
+    picking_from_quant_id = fields.Many2one('stock.picking_from_quants', string='Quants')
+          
+class PickingFromQuantsWizard(models.TransientModel):
+    _name = 'stock.picking_from_quants'        # generic error checking
+
+    quants_line = fields.One2many('stock.picking_from_quants.lines', 'picking_from_quant_id', string='Quants Lines')
+
+    picking_type_id = fields.Many2one(
+        'stock.picking.type', 
+        'Picking Type',
+#        required=True,
+#        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]}
+        )
+
+
+    
+    fixed_destination = fields.Boolean(
+        string='Fixed destination',
+        related='picking_type_id.fixed_destination',
+        )
+    
+    location_dest_id = fields.Many2one(
+        'stock.location', 
+        "Destination Location Zone",
+ #       required=True,        
+#        states={'draft': [('readonly', False)]}
+        )
+        
+    location_source_id = fields.Many2one(
+        'stock.location', 
+        "Source Location Zone",
+ #       required=True,        
+#        states={'draft': [('readonly', False)]}
+        )
+        
     maple_producer = fields.Many2one(
         comodel_name='res.partner',
-        string= 'Producer',
+        compute='_compute_producer',
         help="Producer. "
         )
 
@@ -70,18 +109,28 @@ class PickingFromQuantsWizard(models.TransientModel):
         help="Qaunts. "
         )
 
+    note = fields.Text('Internal Notes')
+
+    @api.onchange('related_ids')
+    def _compute_producer(self):
+        context = dict(self._context or {})
+        active_ids = context.get('active_ids', []) or []
+        self.maple_producer = self.env['stock.quant'].browse(active_ids[0]).owner_id
+
+
+    @api.onchange('picking_type_id')
+    def _compute_related_destination(self):
+        self.location_dest_id = self.picking_type_id.default_location_dest_id
+
     @api.onchange('maple_producer')
     def _compute_related(self):
         context = dict(self._context or {})
         active_ids = context.get('active_ids', []) or []
-        if active_ids:
-            quants_selected = self.env['stock.quant'].browse(active_ids)
-
-
-    @api.onchange('maple_producer')
-    def _compute_related(self):
-        context = dict(self._context or {})
-        active_ids = context.get('active_ids', []) or []
+        
+        quants = self.env['stock.quant'].browse(active_ids)
+        
+        for q in quants:
+            self.env['stock.picking_from_quants.lines'].create({'quant_id':q.id})
         
         self.related_ids =  ''.join(str(e) for e in active_ids)
 
@@ -102,7 +151,8 @@ class PickingFromQuantsWizard(models.TransientModel):
 
         partners = []
         locations = []
-        products = []
+        products = []        # generic error checking
+
         quantity = 0.
 
         for record in self.env['stock.quant'].browse(active_ids):

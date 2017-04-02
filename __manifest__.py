@@ -19,6 +19,10 @@ Add action add_to_picking.
         'maple',
     ],
     'data': [
+        "views/backend_assets.xml",
+        "views/stock_quant_views.xml",
+        "views/stock_location_views.xml",
+        "views/stock_picking_type_views.xml",
         "wizard/stock_picking_from_stock_quants.xml"
     ],
     'qweb': [

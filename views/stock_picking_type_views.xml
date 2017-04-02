@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	
+    	<record id="view_picking_type_form" model="ir.ui.view">
+      		<field name="name">picking_from_quants.view_picking_type_form</field>
+      		<field name="model">stock.picking.type</field>
+      		<field name="priority" eval="16"/>
+      		<field name="inherit_id" ref="stock.view_picking_type_form"/>
+      		<field name="arch" type="xml">
+        		<xpath expr="//sheet" position="inside">
+                    <group string="Validations">
+                        <field name="single_origin" />
+                        <field name="fixed_origin" />
+                        <field name="fixed_destination" />
+                    </group>
+        		</xpath>
+      		</field>
+    	</record>
+    	
+	</data>
+</odoo>

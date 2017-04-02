@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	    <record id="quant_search_view" model="ir.ui.view">
+	        <field name="name">stock.quant.search2</field>
+	        <field name="model">stock.quant</field>
+	        <field eval="10" name="priority"/>
+	        <field name="arch" type="xml">
+	            <search string="Inventory Valuation">
+	                <field name="product_id"/>
+	                <field name="location_id"/>
+	                
+	                <field name="package_id" groups="stock.group_tracking_lot"/>
+	                <field name="lot_id" groups="stock.group_production_lot"/>
+	                <field name="owner_id" groups="stock.group_tracking_owner"/>
+	                <group expand='0' string='Filters'>
+	                    <filter name='internal_loc' string="Internal Locations" domain="[('location_id.usage','=', 'internal')]"/>
+	                    <filter name='transit_loc' string="Transit Locations" domain="[('location_id.usage' ,'=', 'transit')]"/>
+	                    <separator/>
+	                    <filter name="negative" string="Negative" domain="[('qty', '&lt;', 0.0)]"/>
+	                    <filter name="positive" string="Positive" domain="[('qty', '&gt;', 0.0)]"/>
+	                </group>
+	                <group expand='0' string='Group by...'>
+	                    <filter string='Location' name="locationgroup" domain="[]" context="{'group_by': 'location_id'}"/>
+	                    <filter string='Product' name="productgroup" context="{'group_by': 'product_id'}"/>
+	                    <filter string='Owner' context="{'group_by': 'owner_id'}" groups="stock.group_tracking_owner"/>
+	                    <filter string='Lot/Serial Number' context="{'group_by': 'lot_id'}" groups="stock.group_production_lot"/>
+	                    <filter string='Package' domain="[]" context="{'group_by': 'package_id'}" groups="stock.group_tracking_lot"/>
+	                    <filter string='Company' domain="[]" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+	               </group>
+	            </search>
+	        </field>
+		</record>
+
+		<act_window
+		    context="{'search_default_location_id': active_id}"
+		    id="act_quant_location_open"
+		    name="Quants"
+		    res_model="stock.quant"
+			src_model="stock.location"/>
+	
+    	<record id="stock_location_maxItem_form" model="ir.ui.view">
+      		<field name="name">stock.location.maxItem.form</field>
+      		<field name="model">stock.location</field>
+      		<field name="inherit_id" ref="stock.view_location_form"/>
+      		<field name="arch" type="xml">
+        		<xpath expr="//field[@name='usage']" position="before">
+          			<field name="maxItem"/>
+        		</xpath>
+      		</field>
+    	</record>
+
+	    <record id="stock_location_list" model="ir.ui.view">
+			<field name="name">stock_location.list</field>
+		    <field name="model">stock.location</field>
+		    <field name="arch" type="xml">
+                <tree string="List of maple location" toolbar="1" >
+	     			<field name="id"/>
+	     			<field name="name"/>
+    				<field name="qty_purchased"/>	     			
+    				<field name="qty_stock"/>	     			
+    				<field name="maxItem"/>
+		    	</tree>          
+		    </field>
+	    </record>
+
+	    <record id="stock_location_kanban" model="ir.ui.view">
+			<field name="name">stock_location.kanban</field>
+		    <field name="model">stock.location</field>
+		    <field name="arch" type="xml">
+                <kanban default_group_by="" limit="80">
+	     			<field name="name"/>
+    				<field name="qty_stock"/>	     			
+					<field name="qty_purchased"/>
+					<field name="maxItem"/>
+					<field name="kanban_color"/>
+					<field name="kanban_color_rules"/>
+                	<templates>
+						<t t-name="kanban-box">
+                	   		<div t-attf-class="#{kanban_color(record.kanban_color.raw_value)}">
+                	   		 	<div class="o_kanban_card_header">
+                	   		 		<div t-attf-class="#{kanban_color(record.kanban_color_rules.raw_value)}">
+                	   		 	 		<div class="o_primary o_kanban_biger">
+                	   		 	 			<a type="object" name="get_stock_quant_per_location">
+                                            	<strong><field name="name"/></strong>
+											</a>                                           		
+                	   		 			</div>
+                	   		 	 		<div class="o_secondary">
+                                        	Buyer: <field name="current_buyer"/>                                     
+                	   		 			</div>
+                	   		 	 		<div class="o_secondary">
+                                        	Product: <field name="current_product"/>					     			
+                	   		 			</div>
+              	   		 			</div>
+                	   		 	</div>
+	                	   		<div class="oe_kanban_card" >
+									<div class="oe_kanban_content">
+										<div>
+					    					<field name="current_owner"/>							     			
+				    					</div>
+				    				</div>
+									<div class="oe_kanban_bottom_left">		
+										<field name="qty_stock" widget="gauge" style="width:120px;height:90px;cursor:pointer;" 
+										       options="{'max_field': 'maxItem'}">
+										Actual
+										</field>
+				    				</div>
+									<div class="oe_kanban_bottom_right">		
+										<field name="qty_purchased" widget="gauge" style="width:120px;height:90px;cursor:pointer;" 
+										       options="{'max_field': 'maxItem'}">
+										Forecast
+										</field>
+				    				</div>
+					    		</div>		
+					    	</div>    									    		
+		    			</t>
+		    		</templates>
+		    		
+		    	</kanban>          
+		    </field>
+	    </record>
+
+
+
+	</data>
+</odoo>
+

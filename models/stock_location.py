@@ -10,26 +10,41 @@ class stockLocation(models.Model):
 
     kanban_color = fields.Integer(
         string="Color",
-        compute='_compute_qty_stock',
-        store=True
+        compute='_compute_stock',
         )
 
-    current_owner  = fields.Many2one(
-        comodel_name='res.partner',
+    kanban_color_rules = fields.Integer(
+        string="Color rules",
+        compute='_compute_stock',
+        )
+
+    current_owner  = fields.Text(
         string='Owner',
-        compute='_compute_qty_stock',
+        compute='_compute_stock',
         help="Default Owner",
         store=True
-        )    
-    
-    current_rules = fields.Selection([
-        ('HS', 'From Outside'),
-        ('QC', 'From Québec')],
-        help="Product Origin. ",
-        compute='_compute_qty_stock',
+        )
+       
+    current_buyer  = fields.Text(
+        string='Buyer',
+        compute='_compute_stock',
+        help="Default Buyer",
         store=True
+        )
+       
+    current_rules = fields.Char(
+        string='Rules',
+        help="Product Rules. ",
+        compute='_compute_stock',
         )    
         
+    current_product = fields.Char(
+        string='Product',
+        compute='_compute_stock',
+        help="Default Product",
+        store=True
+        )    
+
     maxItem = fields.Integer(
         string="Maximum capacity",
         help="The maximum count of product that can be put in that location. ")
@@ -59,7 +74,6 @@ class stockLocation(models.Model):
     qty_stock  = fields.Float(
         string='Quantity Stock',
         compute='_compute_qty_stock',
-        store=True
         )
       
     @api.depends('purchase_lines')
@@ -70,27 +84,100 @@ class stockLocation(models.Model):
                 if line.product_id.type == 'product':
                     qty += line.product_qty          
             record.qty_purchased = qty
-            
+
+
+  
     @api.depends('stock_lines','stock_lines.owner_id','stock_lines.qty')
-    def _compute_qty_stock(self):
+    def _compute_stock(self):
         for record in self:
             qty = 0
+            product = []
             owner = []
+            buyer = []
             origin = []
+            owner_txt = ""
+            
+            
             for line in record.stock_lines:
                 if line.product_id.type == 'product':
-                    if line.owner_id not in owner:
-                        owner.append(line.owner_id)
+                    
+                    if line.owner_id.id not in owner:
+                        owner.append(line.owner_id.id)
+                        if line.owner_id.state_id.code not in origin:
+                            origin.append(line.owner_id.state_id.code)
+                    
+                    if line.buyer.id not in buyer:
+                        buyer.append(line.buyer.id)
+                    
+                    if line.product_id.id not in product:
+                        product.append(line.product_id.id)                         
+                    
                     qty += line.qty
+
+            if len(origin) == 1:
+                if origin[0] == 'QC':
+                    record.kanban_color_rules = 6                    
+                    record.current_rules = "Québec"
+                else:
+                    record.kanban_color_rules = 5
+                    record.current_rules = "Hors Qc"
+            elif len(origin) > 1: 
+                # un seul buyer
+                if 'QC' in origin:
+                    record.kanban_color_rules = 2
+                    record.current_rules = "Mixed"
+                else:
+                    record.kanban_color_rules = 5
+                    record.current_rules = "Hors Qc"
+                    
+            else:
+                record.kanban_color_rules = 0
+                record.current_rules = ""
+
+
+            if len(product) == 1:
+                # un seul buyer
+                record.current_product = record.stock_lines[0].product_id.default_code
+            else:
+                record.current_product = "MIXED"
+                  
+                  
+                  
+            if len(buyer) == 1:
+                # un seul buyer
+                record.current_buyer = record.stock_lines[0].buyer_code
+                if record.stock_lines[0].buyer_code == "SE":
+                    record.kanban_color = 4
+                elif record.stock_lines[0].buyer_code == "LB":
+                    record.kanban_color = 5
+
+            else:
+                record.kanban_color = 2
+                record.current_buyer = "MIXED"
+                
+
             if owner :                                      
                 if len(owner) == 1:
                     #un seul proprio
-                    record.current_owner = owner [0]
+                    record.current_owner = owner_txt
+#                    record.current_owner = owner[0]
                 else:
                     # pas juste une
-                    record.kanban_color = 4 
+                    record.current_owner = "Multiple Producer"
+
             else:
                 #vide
-                record.kanban_color = 3 
+                record.kanban_color = 0
             record.qty_stock = qty
-            
+  
+    @api.multi
+    def get_stock_quant_per_location(self):
+        return self._get_action('stock_picking_from_stock_quants.act_quant_location_open')  
+    
+    @api.multi
+    def _get_action(self, action_xmlid):
+        # TDE TODO check to have one view + custo in methods
+        action = self.env.ref(action_xmlid).read()[0]
+        if self:
+            action['display_name'] = self.display_name
+        return action

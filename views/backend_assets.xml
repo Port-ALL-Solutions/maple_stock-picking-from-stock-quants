@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="picking_from_quants assets for backend" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link href="/stock_picking_from_stock_quants/static/src/less/style.less" rel = "stylesheet"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>
+
