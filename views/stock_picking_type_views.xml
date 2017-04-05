@@ -10,6 +10,7 @@
       		<field name="arch" type="xml">
         		<xpath expr="//sheet" position="inside">
                     <group string="Validations">
+                        <field name="single_product" />
                         <field name="single_origin" />
                         <field name="fixed_origin" />
                         <field name="fixed_destination" />
