@@ -12,6 +12,12 @@ class stockPickingType(models.Model):
         default=False
         )    
 
+    single_product = fields.Boolean(
+        string='One Product',
+        help='If check, this type of picking will not allow mixed product. ',
+        default=False
+        )    
+
     fixed_origin = fields.Boolean(
         string='Fixed origin',
         help='If check, this type of picking will not allow you to change the origin. ',

@@ -10,7 +10,6 @@ class PickingFromQuantsWizardLines(models.TransientModel):
         'stock.quant', 
         'Product selected',
         )
-            # generic error checking
 
     quant_serial = fields.Char(
         string='Serial',
@@ -20,7 +19,7 @@ class PickingFromQuantsWizardLines(models.TransientModel):
     picking_from_quant_id = fields.Many2one('stock.picking_from_quants', string='Quants')
           
 class PickingFromQuantsWizard(models.TransientModel):
-    _name = 'stock.picking_from_quants'        # generic error checking
+    _name = 'stock.picking_from_quants'
 
     quants_line = fields.One2many('stock.picking_from_quants.lines', 'picking_from_quant_id', string='Quants Lines')
 
@@ -31,8 +30,6 @@ class PickingFromQuantsWizard(models.TransientModel):
 #        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]}
         )
 
-
-    
     fixed_destination = fields.Boolean(
         string='Fixed destination',
         related='picking_type_id.fixed_destination',
@@ -82,14 +79,7 @@ class PickingFromQuantsWizard(models.TransientModel):
         string='Region',
         related='maple_producer.maple_region.name',
         )
-    
-#    employee_id = fields.Many2one(
-#        comodel_name='hr.employee',
-#        string= 'Employee',
-#        help="Employee. "
-#ajouter domaine pour limiter aux inspecteurs
-#        )
-    
+        
     date_planed = fields.Date(
         string='Date planed',
         required=True,
@@ -134,7 +124,6 @@ class PickingFromQuantsWizard(models.TransientModel):
         
         self.related_ids =  ''.join(str(e) for e in active_ids)
 
-    @api.multi
     def action_create_picking_from_quants(self):
         context = dict(self._context or {})
         active_ids = context.get('active_ids', []) or []
@@ -167,13 +156,13 @@ class PickingFromQuantsWizard(models.TransientModel):
         if not products:
              raise UserError(_("No product."))
 
-        if len (products) > 1:
+        if picking_type_obj.single_product and len (products) > 1: 
              raise UserError(_("More than one product."))
         
         if not partners:
              raise UserError(_("No producer."))
 
-        if len (partners) > 1:
+        if picking_type_obj.single_origin and len (partners) > 1:
              raise UserError(_("More than one producer."))
         
         if not locations:
@@ -194,60 +183,106 @@ class PickingFromQuantsWizard(models.TransientModel):
             }
          
         picking = picking_obj.create(picking_vals)
-        product = product_obj.browse(products)
+
         
-        move_vals= {
-            'picking_id': picking.id,
-            'product_id': products[0],
-            'name': "Manually created",
-            'product_uom_qty' : quantity,
-            'product_uom' : product.uom_id.id,
-            'location_id': locations[0],
-            'location_dest_id': picking_type_obj.default_location_dest_id.id,
-            }
+        moved_products = product_obj.browse(products)
+  
+        for product in moved_products:        
+            product = product_obj.browse(products)
             
-        move = move_obj.create(move_vals)
+            move_vals= {
+                'picking_id': picking.id,
+                'product_id': products[0],
+                'name': "Manually created",
+                'product_uom_qty' : quantity,
+                'product_uom' : product.uom_id.id,
+                'location_id': locations[0],
+                'location_dest_id': picking_type_obj.default_location_dest_id.id,
+                }                
+            move = move_obj.create(move_vals)
+
         picking.action_confirm()
         picking.action_assign()
-        
+
         selected_lots = quant_obj.browse(active_ids)
-        autopick_lots = move.reserved_quant_ids
         
-        for lot in autopick_lots:
-            if lot not in selected_lots:
-                lot.write({'reservation_id': False})
-                
-        for lot in selected_lots:
-            if not lot.reservation_id:
-                quants = quant_obj.quants_get_preferred_domain(lot.qty, move, lot_id=lot.lot_id.id)
-#                quants = quant_obj.quants_get_preferred_domain(lot.qty, move, ops=ops, lot_id=lot.lot_id, domain=domain, preferred_domain_list=[])
-                lot.quants_reserve(quants, move)
         
-        ops = picking.pack_operation_product_ids
-        ops.write({'owner_id': partners[0]})
-        ops_lots = ops.pack_lot_ids
-        x = 0
-        for lot in ops_lots:
-            lot.write({'lot_id': selected_lots[x].lot_id.id})
-            x += 1
+        for move in picking.move_lines:  
+            autopick_lots = move.reserved_quant_ids
+            for lot in autopick_lots:
+                if lot not in selected_lots:
+                    lot.write({'reservation_id': False})
+            for lot in selected_lots:
+                if not lot.reservation_id:
+                    quants = quant_obj.quants_get_preferred_domain(lot.qty, move, lot_id=lot.lot_id.id)
+    #                quants = quant_obj.quants_get_preferred_domain(lot.qty, move, ops=ops, lot_id=lot.lot_id, domain=domain, preferred_domain_list=[])
+                    lot.quants_reserve(quants, move)
 
-#        move.quants_unreserve()
-#        operation = operation__obj.browse(picking.pack_operation_product_ids)
-#        operation_lots = operation_lots_obj.browse(opertation.pack_lots_ids)
-        
-                
-#        for record in self.env['stock.quant'].browse(active_ids):
+
+
+        for ops in picking.pack_operation_product_ids:            
+            ops.write({'owner_id': partners[0]})
+            ops_lots = ops.pack_lot_ids
+            x = 0
+            for lot in ops_lots:
+                lot.write({'lot_id': selected_lots[x].lot_id.id})
+                x += 1
             
-#        for record in self.env['stock.quant'].browse(active_ids):
-    #            if record.state not in ('draft', 'proforma', 'proforma2'):
-    #                raise UserError(_("Selected invoice(s) cannot be confirmed as they are not in 'Draft' or 'Pro-Forma' state."))
-              
- #           record.action_change_test()
         return {'type': 'ir.actions.act_window_close'}
-
 
     @api.multi
     def action_add_quants_to_picking(self):
         context = dict(self._context or {})
         active_ids = context.get('active_ids', []) or []
         return {'type': 'ir.actions.act_window_close'}
+    
+    def action_create_classification(self):
+        context = dict(self._context or {})
+        active_ids = context.get('active_ids', []) or []
+
+        partners = []
+        locations = []
+        products = []        # generic error checking
+
+        quantity = 0.
+
+        for record in self.env['stock.quant'].browse(active_ids):
+            quantity += record.qty
+            if record.producer.id not in partners:
+                partners.append(record.producer.id)
+            if record.location_id.id not in locations:
+                locations.append(record.location_id.id)
+            if record.product_id.id not in products:
+                products.append(record.product_id.id)
+
+        if not products:
+             raise UserError(_("No product."))
+
+#        if len (products) > 1:
+#             raise UserError(_("More than one product."))
+        
+        if not partners:
+             raise UserError(_("No producer."))
+
+#        if len (partners) > 1:
+#             raise UserError(_("More than one producer."))
+        
+        if not locations:
+             raise UserError(_("No locations."))
+
+        if len (locations) > 1:
+             raise UserError(_("More than one locations."))
+
+        classification_obj = self.env['maple.classification']
+        classification = classifiaciton_obj.create()
+        classification_line_obj = self.env['maple.classification.line']
+
+        for record in self.env['stock.quant'].browse(active_ids):
+            classification_line_vals = {
+                'classification_id': classification.id,
+                'quant_id': record.id}
+            classification_line = classification_line_obj.create(classification_line_vals)
+            
+        return {'type': 'ir.actions.act_window_close'}
+
+    
