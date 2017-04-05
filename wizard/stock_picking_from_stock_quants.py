@@ -183,7 +183,6 @@ class PickingFromQuantsWizard(models.TransientModel):
             }
          
         picking = picking_obj.create(picking_vals)
-
         
         moved_products = product_obj.browse(products)
   
@@ -206,7 +205,6 @@ class PickingFromQuantsWizard(models.TransientModel):
 
         selected_lots = quant_obj.browse(active_ids)
         
-        
         for move in picking.move_lines:  
             autopick_lots = move.reserved_quant_ids
             for lot in autopick_lots:
@@ -217,8 +215,6 @@ class PickingFromQuantsWizard(models.TransientModel):
                     quants = quant_obj.quants_get_preferred_domain(lot.qty, move, lot_id=lot.lot_id.id)
     #                quants = quant_obj.quants_get_preferred_domain(lot.qty, move, ops=ops, lot_id=lot.lot_id, domain=domain, preferred_domain_list=[])
                     lot.quants_reserve(quants, move)
-
-
 
         for ops in picking.pack_operation_product_ids:            
             ops.write({'owner_id': partners[0]})

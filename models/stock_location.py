@@ -75,6 +75,11 @@ class stockLocation(models.Model):
         string='Quantity Stock',
         compute='_compute_qty_stock',
         )
+
+    lbs_stock  = fields.Float(
+        string='Quantity Stock',
+        compute='_compute_qty_stock',
+        )
       
     @api.depends('purchase_lines')
     def _compute_qty_purchase(self):
@@ -91,6 +96,7 @@ class stockLocation(models.Model):
     def _compute_stock(self):
         for record in self:
             qty = 0
+            lbs = 0
             product = []
             owner = []
             buyer = []
@@ -112,7 +118,10 @@ class stockLocation(models.Model):
                     if line.product_id.id not in product:
                         product.append(line.product_id.id)                         
                     
-                    qty += line.qty
+                    if line.product_id.maple_container:
+                        qty += line.qty
+                    else:
+                        lbs += line.qty
 
             if len(origin) == 1:
                 if origin[0] == 'QC':
@@ -169,6 +178,7 @@ class stockLocation(models.Model):
                 #vide
                 record.kanban_color = 0
             record.qty_stock = qty
+            record.lbs_stock = lbs
   
     @api.multi
     def get_stock_quant_per_location(self):
