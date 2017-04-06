@@ -70,6 +70,7 @@
 		    <field name="arch" type="xml">
                 <kanban default_group_by="" limit="80">
 	     			<field name="name"/>
+    				<field name="lbs_stock"/>	     			
     				<field name="qty_stock"/>	     			
 					<field name="qty_purchased"/>
 					<field name="maxItem"/>
@@ -99,13 +100,14 @@
 					    					<field name="current_owner"/>							     			
 				    					</div>
 				    				</div>
-									<div class="oe_kanban_bottom_left">		
+									<div class="oe_kanban_bottom_left">
 										<field name="qty_stock" widget="gauge" style="width:120px;height:90px;cursor:pointer;" 
 										       options="{'max_field': 'maxItem'}">
 										Actual
-										</field>
+										</field>										    
+										<field name="lbs_stock"/>
 				    				</div>
-									<div class="oe_kanban_bottom_right">		
+									<div class="oe_kanban_bottom_right">
 										<field name="qty_purchased" widget="gauge" style="width:120px;height:90px;cursor:pointer;" 
 										       options="{'max_field': 'maxItem'}">
 										Forecast

@@ -179,7 +179,7 @@ class PickingFromQuantsWizard(models.TransientModel):
             'move_type': 'direct',
             'note': self.note or "",
             'location_id': locations[0],
-            'location_dest_id': picking_type_obj.default_location_dest_id.id,
+            'location_dest_id': self.location_dest_id,
             }
          
         picking = picking_obj.create(picking_vals)
@@ -196,7 +196,7 @@ class PickingFromQuantsWizard(models.TransientModel):
                 'product_uom_qty' : quantity,
                 'product_uom' : product.uom_id.id,
                 'location_id': locations[0],
-                'location_dest_id': picking_type_obj.default_location_dest_id.id,
+                'location_dest_id': self.location_dest_id,
                 }                
             move = move_obj.create(move_vals)
 

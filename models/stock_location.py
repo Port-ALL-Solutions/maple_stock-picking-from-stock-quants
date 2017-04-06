@@ -104,7 +104,7 @@ class stockLocation(models.Model):
             owner_txt = ""
             
             
-            for line in record.stock_lines:
+            for line in record.stock_lines:        
                 if line.product_id.type == 'product':
                     
                     if line.owner_id.id not in owner:
@@ -128,7 +128,7 @@ class stockLocation(models.Model):
                     record.kanban_color_rules = 6                    
                     record.current_rules = "Québec"
                 else:
-                    record.kanban_color_rules = 5
+                    record.kanban_color_rules = 5        
                     record.current_rules = "Hors Qc"
             elif len(origin) > 1: 
                 # un seul buyer
