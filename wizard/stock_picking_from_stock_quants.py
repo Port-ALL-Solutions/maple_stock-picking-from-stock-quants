@@ -141,7 +141,8 @@ class PickingFromQuantsWizard(models.TransientModel):
         partners = []
         locations = []
         products = []        # generic error checking
-
+        prod_list = []
+        
         quantity = 0.
 
         for record in self.env['stock.quant'].browse(active_ids):
@@ -150,10 +151,20 @@ class PickingFromQuantsWizard(models.TransientModel):
                 partners.append(record.producer.id)
             if record.location_id.id not in locations:
                 locations.append(record.location_id.id)
-            if record.product_id.id not in products:
-                products.append(record.product_id.id)
-
-        if not products:
+            if len(products):
+                found_product = False
+                for p in products:
+                    if p['product_id'] == record.product_id.id:
+                        p['qty'] += record.qty
+                        found_product = True
+                if not found_product:
+                    products.append({'product_id':record.product_id.id,'qty':record.qty})
+                    prod_list.append(record.product_id.id)
+            else:
+                products.append({'product_id':record.product_id.id,'qty':record.qty})
+                prod_list.append(record.product_id.id)
+                
+        if not len(products):
              raise UserError(_("No product."))
 
         if picking_type_obj.single_product and len (products) > 1: 
@@ -179,26 +190,40 @@ class PickingFromQuantsWizard(models.TransientModel):
             'move_type': 'direct',
             'note': self.note or "",
             'location_id': locations[0],
-            'location_dest_id': self.location_dest_id,
+            'location_dest_id': self.location_dest_id.id,
             }
          
         picking = picking_obj.create(picking_vals)
         
-        moved_products = product_obj.browse(products)
+#        moved_products = product_obj.browse(prod_list)
   
-        for product in moved_products:        
-            product = product_obj.browse(products)
-            
+        for p in products:
+            moved_product = product_obj.browse(p['product_id'])
             move_vals= {
-                'picking_id': picking.id,
-                'product_id': products[0],
-                'name': "Manually created",
-                'product_uom_qty' : quantity,
-                'product_uom' : product.uom_id.id,
-                'location_id': locations[0],
-                'location_dest_id': self.location_dest_id,
-                }                
+                    'picking_id': picking.id,
+                    'product_id': moved_product.id,
+                    'name': "Manually created",
+                    'product_uom_qty' : p['qty'],
+                    'product_uom' : moved_product.uom_id.id,
+                    'location_id': locations[0],
+                    'location_dest_id': self.location_dest_id.id,
+                    }                
             move = move_obj.create(move_vals)
+
+        
+#         for product in moved_products:        
+# #            product = product_obj.browse(products)
+#             
+#             move_vals= {
+#                 'picking_id': picking.id,
+#                 'product_id': product.id,
+#                 'name': "Manually created",
+#                 'product_uom_qty' : quantity,
+#                 'product_uom' : product.uom_id.id,
+#                 'location_id': locations[0],
+#                 'location_dest_id': picking_type_obj.default_location_dest_id.id,
+#                 }                
+#             move = move_obj.create(move_vals)
 
         picking.action_confirm()
         picking.action_assign()
