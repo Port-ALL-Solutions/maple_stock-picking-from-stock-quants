@@ -138,31 +138,39 @@ class PickingFromQuantsWizard(models.TransientModel):
         operation_obj = self.env['stock.pack.operation']
         operation_lot_obj = self.env['stock.pack.operation.lot']
 
-        partners = []
-        locations = []
-        products = []        # generic error checking
-        prod_list = []
         
         quantity = 0.
+        quants = self.env['stock.quant'].browse(active_ids)
+        
+        partners = quants.mapped('producer')
+        locations = quants.mapped('location_id')
+        products = quants.mapped('product_id')
 
-        for record in self.env['stock.quant'].browse(active_ids):
-            quantity += record.qty
-            if record.producer.id not in partners:
-                partners.append(record.producer.id)
-            if record.location_id.id not in locations:
-                locations.append(record.location_id.id)
-            if len(products):
-                found_product = False
-                for p in products:
-                    if p['product_id'] == record.product_id.id:
-                        p['qty'] += record.qty
-                        found_product = True
-                if not found_product:
-                    products.append({'product_id':record.product_id.id,'qty':record.qty})
-                    prod_list.append(record.product_id.id)
-            else:
-                products.append({'product_id':record.product_id.id,'qty':record.qty})
-                prod_list.append(record.product_id.id)
+#         prod_list = []        
+#         
+#         partners = []
+#         locations = []
+#         products = []        # generic error checking
+#         prod_list = []
+#         
+#         for record in quants:
+#             quantity += record.qty
+#             if record.producer.id not in partners:
+#                 partners.append(record.producer.id)
+#             if record.location_id.id not in locations:
+#                 locations.append(record.location_id.id)
+#             if len(products):
+#                 found_product = False
+#                 for p in products:
+#                     if p['product_id'] == record.product_id.id:
+#                         p['qty'] += record.qty
+#                         found_product = True
+#                 if not found_product:
+#                     products.append({'product_id':record.product_id.id,'qty':record.qty})
+#                     prod_list.append(record.product_id.id)
+#             else:
+#                 products.append({'product_id':record.product_id.id,'qty':record.qty})
+#                 prod_list.append(record.product_id.id)
                 
         if not len(products):
              raise UserError(_("No product."))
@@ -189,7 +197,7 @@ class PickingFromQuantsWizard(models.TransientModel):
             'picking_type_id': self.picking_type_id.id,
             'move_type': 'direct',
             'note': self.note or "",
-            'location_id': locations[0],
+            'location_id': locations[0].id,
             'location_dest_id': self.location_dest_id.id,
             }
          
@@ -197,15 +205,15 @@ class PickingFromQuantsWizard(models.TransientModel):
         
 #        moved_products = product_obj.browse(prod_list)
   
-        for p in products:
-            moved_product = product_obj.browse(p['product_id'])
+        for product in products:
+            quants_product = quants.filtered(lambda r: r.product_id == product)
             move_vals= {
                     'picking_id': picking.id,
-                    'product_id': moved_product.id,
+                    'product_id': product.id,
                     'name': "Manually created",
-                    'product_uom_qty' : p['qty'],
-                    'product_uom' : moved_product.uom_id.id,
-                    'location_id': locations[0],
+                    'product_uom_qty' : len(quants_product),
+                    'product_uom' : product.uom_id.id,
+                    'location_id': locations[0].id,
                     'location_dest_id': self.location_dest_id.id,
                     }                
             move = move_obj.create(move_vals)
@@ -228,26 +236,26 @@ class PickingFromQuantsWizard(models.TransientModel):
         picking.action_confirm()
         picking.action_assign()
 
-        selected_lots = quant_obj.browse(active_ids)
-        
-        for move in picking.move_lines:  
-            autopick_lots = move.reserved_quant_ids
-            for lot in autopick_lots:
-                if lot not in selected_lots:
-                    lot.write({'reservation_id': False})
-            for lot in selected_lots:
-                if not lot.reservation_id:
-                    quants = quant_obj.quants_get_preferred_domain(lot.qty, move, lot_id=lot.lot_id.id)
-    #                quants = quant_obj.quants_get_preferred_domain(lot.qty, move, ops=ops, lot_id=lot.lot_id, domain=domain, preferred_domain_list=[])
-                    lot.quants_reserve(quants, move)
-
-        for ops in picking.pack_operation_product_ids:            
-            ops.write({'owner_id': partners[0]})
-            ops_lots = ops.pack_lot_ids
-            x = 0
-            for lot in ops_lots:
-                lot.write({'lot_id': selected_lots[x].lot_id.id})
-                x += 1
+#         selected_lots = quant_obj.browse(active_ids)
+#         
+#         for move in picking.move_lines:  
+#             autopick_lots = move.reserved_quant_ids
+#             for lot in autopick_lots:
+#                 if lot not in selected_lots:
+#                     lot.write({'reservation_id': False})
+#             for lot in selected_lots:
+#                 if not lot.reservation_id:
+#                     quants = quant_obj.quants_get_preferred_domain(lot.qty, move, lot_id=lot.lot_id.id)
+#     #                quants = quant_obj.quants_get_preferred_domain(lot.qty, move, ops=ops, lot_id=lot.lot_id, domain=domain, preferred_domain_list=[])
+#                     lot.quants_reserve(quants, move)
+# 
+#         for ops in picking.pack_operation_product_ids:            
+#             ops.write({'owner_id': partners[0].id})
+#             ops_lots = ops.pack_lot_ids
+#             x = 0
+#             for lot in ops_lots:
+#                 lot.write({'lot_id': selected_lots[x].lot_id.id})
+#                 x += 1
             
         return {'type': 'ir.actions.act_window_close'}
 
