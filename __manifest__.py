@@ -19,6 +19,7 @@ Add action add_to_picking.
         'maple',
     ],
     'data': [
+        "views/maple_stock.xml",
         "views/backend_assets.xml",
         "views/stock_quant_views.xml",
         "views/stock_location_views.xml",
