@@ -178,8 +178,8 @@ class PickingFromQuantsWizard(models.TransientModel):
         if picking_type_obj.single_product and len (products) > 1: 
              raise UserError(_("More than one product."))
         
-        if not partners:
-             raise UserError(_("No producer."))
+#         if not partners:
+#              raise UserError(_("No producer."))
 
         if picking_type_obj.single_origin and len (partners) > 1:
              raise UserError(_("More than one producer."))
@@ -290,8 +290,8 @@ class PickingFromQuantsWizard(models.TransientModel):
 #        if len (products) > 1:
 #             raise UserError(_("More than one product."))
         
-        if not partners:
-             raise UserError(_("No producer."))
+#         if not partners:
+#              raise UserError(_("No producer."))
 
 #        if len (partners) > 1:
 #             raise UserError(_("More than one producer."))
