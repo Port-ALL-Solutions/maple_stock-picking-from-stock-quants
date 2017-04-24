@@ -22,10 +22,11 @@ class MapleOrder(models.Model):
                     fpos = self.fiscal_position_id or self.partner_id.property_account_position_id
                     if fpos:
                         account = fpos.map_account(account)
+                    taxes = pack_ops.product_id.taxes_id.filtered(lambda r: r.company_id == pack_ops.picking_id.company_id)
+                    tax_id = fpos.map_tax(taxes, line.product_id, line.order_id.partner_shipping_id) if fpos else taxes
 
-                    
                     vals = {
-                        'name': self.name,
+                        'name': pack_ops.product_id.name_get()[0][1],
                         'invoice_id':invoice.id,
 #                        'sequence': self.sequence,
                         'origin': self.name,
@@ -37,11 +38,33 @@ class MapleOrder(models.Model):
                         'product_id': pack_ops.product_id.id,
 #                        'layout_category_id': self.layout_category_id and self.layout_category_id.id or False,
 #                        'product_id': self.product_id.id or False,
-#                        'invoice_line_tax_ids': [(6, 0, self.tax_id.ids)],
+                        'invoice_line_tax_ids': [(6, 0, tax_id.ids)],
 #                        'account_analytic_id': self.order_id.project_id.id,
 #                        'analytic_tag_ids': [(6, 0, self.analytic_tag_ids.ids)],
                         }
-                    self.env['account.invoice.line'].create(vals)    
+                    self.env['account.invoice.line'].create(vals)
+                for lot in pack_ops.pack_lot_ids:
+                    vals = {
+                        'name': pack_ops.product_id.name_get()[0][1] + " " + lot.lot_id.name,
+                        'invoice_id':invoice.id,
+#                        'sequence': self.sequence,
+                        'origin': self.name,
+                        'account_id': account.id,
+                        'price_unit': 0,
+#                        'price_unit': pack_ops.product_id.with_context(pricelist=self.pricelist_id.id).price,
+                        'quantity': pack_ops.qty_done,
+#                        'discount': self.discount,
+#                        'uom_id': pack_ops.product_id.uom_id.id,
+#                        'product_id': pack_ops.product_id.id,
+#                        'layout_category_id': self.layout_category_id and self.layout_category_id.id or False,
+#                        'product_id': self.product_id.id or False,
+#                        'invoice_line_tax_ids': [(6, 0, tax_id.ids)],
+#                        'account_analytic_id': self.order_id.project_id.id,
+#                        'analytic_tag_ids': [(6, 0, self.analytic_tag_ids.ids)],
+                        }
+                    self.env['account.invoice.line'].create(vals)
+
+                     
                 
             
         return super_return
