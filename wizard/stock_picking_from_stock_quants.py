@@ -21,6 +21,18 @@ class PickingFromQuantsWizardLines(models.TransientModel):
 class PickingFromQuantsWizard(models.TransientModel):
     _name = 'stock.picking_from_quants'
 
+    
+    tmp_controller = fields.Many2one(
+        comodel_name='hr.employee',
+        string='Expected Controller',
+        domain=[('job_id.name','==','Controller')],
+        readonly=False) #valeur par défaut modifiable; ajoputer comme valeur par défaut à stock_quant
+    
+    producer_present = fields.Boolean(
+        string="Producer present",
+        help="Indicates if the producer will be present at classification. "
+        )
+
     quants_line = fields.One2many('stock.picking_from_quants.lines', 'picking_from_quant_id', string='Quants Lines')
 
     picking_type_id = fields.Many2one(
@@ -199,6 +211,8 @@ class PickingFromQuantsWizard(models.TransientModel):
             'note': self.note or "",
             'location_id': locations[0].id,
             'location_dest_id': self.location_dest_id.id,
+            'tmp_controller': self.tmp_controller.id,
+            'producer_present': self.producer_present,
             }
          
         picking = picking_obj.create(picking_vals)

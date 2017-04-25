@@ -16,6 +16,7 @@
                     		</group>
                     		<group>
 	                            <field name="date_planed"/>
+	                            <field name="tmp_controller"/>
 	                            <field name="note"/>
                     		</group>
                     		<group>
@@ -24,6 +25,7 @@
   	                            <field name="partner_city" readonly="1"/>
   	                            <field name="partner_state" readonly="1"/>
   	                            <field name="partner_region" readonly="1"/>
+  	                            <field name="producer_present" readonly="0"/>
                     		</group>
 							<notebook>                    		
                     			<page string="Products">
