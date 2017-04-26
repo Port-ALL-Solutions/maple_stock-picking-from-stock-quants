@@ -155,7 +155,7 @@ class MaplePicking(models.Model):
         
         # fix picking
         super(MaplePicking,self).do_transfer()
-        if self.move_lines[0].move_dest_id.picking_id:
+        if self.move_lines[0].move_dest_id.picking_id: #and self.picking_type_id.id in [3,4,9,10,15,16,21,22,27,28]:
             self.adjust_child_picking()
         return
 
@@ -163,7 +163,7 @@ class MaplePicking(models.Model):
 
     @api.multi
     def do_new_transfer(self):
-
+#        if self.picking_type_id.id in [3,4,9,10,15,16,21,22,27,28]:
         self.adjust_picking()
         return super(MaplePicking,self).do_new_transfer()
 

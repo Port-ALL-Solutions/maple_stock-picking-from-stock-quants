@@ -18,7 +18,7 @@ class MaplePackOperation(models.Model):
         if self.product_id.maple_container:
             for lot in self.pack_lot_ids:
                 for quant in lot.lot_id.quant_ids:
-                    weight += quant.maple_net_weight * lot.qty
+                    weight += quant.maple_payable_weight * lot.qty
 #             if self.picking_id:
 #                 related_op = self.picking_id.pack_operation_ids.filtered(lambda r: r.product_id.default_code == self.product_id.default_code[1:] )
 #                 if not related_op:
