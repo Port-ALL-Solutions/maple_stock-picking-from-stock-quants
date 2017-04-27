@@ -75,6 +75,12 @@ class stockLocation(models.Model):
         string='Quantity Stock',
         compute='_compute_qty_stock',
         )
+    
+    counter  = fields.Integer(
+        string='Weighing counter',
+        help='Weighing order',
+        default=0
+        )
 
     lbs_stock  = fields.Float(
         string='Quantity Stock',
