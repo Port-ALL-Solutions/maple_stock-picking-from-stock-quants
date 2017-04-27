@@ -157,6 +157,13 @@ class MaplePicking(models.Model):
         super(MaplePicking,self).do_transfer()
         if self.move_lines[0].move_dest_id.picking_id: #and self.picking_type_id.id in [3,4,9,10,15,16,21,22,27,28]:
             self.adjust_child_picking()
+            
+        if self.location_dest_id.id in [42, 48]:
+            cpt = len(self.location_id.stock_lines.filtered(lambda q: q.weighing_sequence))
+            for quant in self.location_id.stock_lines.filtered(lambda q: not q.weighing_sequence):
+                cpt += 1
+                quant.write({'weighing_sequence' : cpt})            
+            
         return
 
 #        self.do_invoice()
@@ -173,5 +180,11 @@ class MaplePicking(models.Model):
             move._push_apply()
         return extra_move
 
-
-#         
+#     @api.multi
+#     def action_done(self):
+#         super(MaplePicking,self).action_done()
+#         if self.location_dest_id.id in [42, 48]:
+#             cpt = len(location_id.stock_lines.filtered(lambda q: q.weighing_sequence))
+#             for quant in location_id.stock_lines.filtered(lambda q: not q.weighing_sequence):
+#                 cpt += 1
+#                 quant.write({'weighing_sequence' : cpt})
