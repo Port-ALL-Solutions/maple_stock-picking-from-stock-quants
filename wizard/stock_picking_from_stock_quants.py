@@ -25,7 +25,7 @@ class PickingFromQuantsWizard(models.TransientModel):
     tmp_controller = fields.Many2one(
         comodel_name='hr.employee',
         string='Expected Controller',
-        domain=[('job_id.name','=','Controller')],
+        domain="[('inspectNb', '!=', False)]",
         readonly=False) #valeur par défaut modifiable; ajoputer comme valeur par défaut à stock_quant
     
     producer_present = fields.Boolean(

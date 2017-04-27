@@ -1,0 +1,584 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_from_stock_quants
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-27 08:17-0400\n"
+"PO-Revision-Date: 2017-04-27 08:48-0400\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Last-Translator: \n"
+"Language: fr_CA\n"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.stock_location_kanban
+msgid "Actual"
+msgstr "Présent"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_partner_street
+msgid "Address"
+msgstr "Adresse"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_picking_from_quants_partner_state
+msgid ""
+"Administrative divisions of a country. E.g. Fed. State, Departement, Canton"
+msgstr ""
+"Divisions administratives  d'un pays. Ex: Province, État,  Département, "
+"Canton,..."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_location_current_buyer
+msgid "Buyer"
+msgstr "Acheteur"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.stock_location_kanban
+msgid "Buyer:"
+msgstr "Acheteur:"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.actions.act_window,help:stock_picking_from_stock_quants.quants_list_action
+msgid "Can not add from here"
+msgstr "Impossible d'ajouter d'ici"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.stock_picking_from_stock_quants_view
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_partner_city
+msgid "City"
+msgstr "Ville"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_picking_from_quants_partner_region
+msgid "Code of picking and delivery region"
+msgstr "Code de la région de cueillette et livraison"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_location_kanban_color
+msgid "Color"
+msgstr "Couleur"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_location_kanban_color_rules
+msgid "Color rules"
+msgstr "Règles de Couleurs"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.quant_search_view
+msgid "Company"
+msgstr "Entreprise"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.stock_picking_from_stock_quants_view
+msgid "Create"
+msgstr "Créer"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.stock_picking_from_stock_quants_view
+msgid "Create Stock Picking from Quants"
+msgstr "Créer un transfert à partir d'articles"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_create_uid
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_lines_create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_create_date
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_lines_create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_picking_from_quants_date_planed
+msgid "Date at which weighing is planed to be done. "
+msgstr "Date à laquelle la pesée est planifiée."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_date_planed
+msgid "Date planed"
+msgstr "Date planifiée"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_location_current_buyer
+msgid "Default Buyer"
+msgstr "Acheteur habituel"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_location_current_owner
+msgid "Default Owner"
+msgstr "Propriétaire habituel"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_location_current_product
+msgid "Default Product"
+msgstr "Produit  habituel"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_location_dest_id
+msgid "Destination Location Zone"
+msgstr "Zone de destination"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_display_name
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_lines_display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_tmp_controller
+msgid "Expected Controller"
+msgstr "Inspecteur prévu"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_partner_fpaqCode
+msgid "FPAQ"
+msgstr "FPAQ"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.quant_search_view
+msgid "Filters"
+msgstr "Filtres"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_fixed_destination
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_type_fixed_destination
+msgid "Fixed destination"
+msgstr "Destination fixée"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_type_fixed_origin
+msgid "Fixed origin"
+msgstr "Origine fixée"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.stock_location_kanban
+msgid "Forecast"
+msgstr "Projection"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.quant_search_view
+msgid "Group by..."
+msgstr "Grouper par..."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_id
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_lines_id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_picking_type_single_origin
+msgid "If check, this type of picking allow only from same origin (partner). "
+msgstr "Si coché, ce type de transfert force l'origine identique (partenaire)."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_picking_type_single_product
+msgid "If check, this type of picking will not allow mixed product. "
+msgstr ""
+"Si coché, ce type de transfert ne permettra pas de mélanger les produits."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_picking_from_quants_fixed_destination
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_picking_type_fixed_destination
+msgid ""
+"If check, this type of picking will not allow you to change the destination. "
+msgstr ""
+"Si coché, ce type de transfert ne permettra pas de changer la destination."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_picking_type_fixed_origin
+msgid ""
+"If check, this type of picking will not allow you to change the origin. "
+msgstr "Si coché, ce type de transfert ne permettra pas de changer l'origine."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_picking_from_quants_producer_present
+msgid "Indicates if the producer will be present at classification. "
+msgstr "Indique la présence du Producteur à la classification."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.quant_search_view
+msgid "Internal Locations"
+msgstr "Emplacements internes"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_note
+msgid "Internal Notes"
+msgstr "Notes internes"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model,name:stock_picking_from_stock_quants.model_stock_location
+msgid "Inventory Locations"
+msgstr "Emplacements d'inventaire"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.quant_search_view
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.view_stock_quant_tree
+msgid "Inventory Valuation"
+msgstr "Valeur d'inventaire"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants___last_update
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_lines___last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_lines_write_uid
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_lines_write_date
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.stock_location_list
+msgid "List of maple location"
+msgstr "Liste des emplacements"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.quant_search_view
+msgid "Location"
+msgstr "Emplacement"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.quant_search_view
+msgid "Lot/Serial Number"
+msgstr "Lot/numéro de série"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model,name:stock_picking_from_stock_quants.model_stock_pack_operation_lot
+msgid "Lot/Serial number for pack ops"
+msgstr "Lot/numéro de série pour pack ops"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_move_maple_weight
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_pack_operation_lot_maple_weight
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_pack_operation_maple_weight
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_maple_weight
+msgid "Maple Weight"
+msgstr "Poids du sirop"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_maple_producer
+msgid "Maple producer"
+msgstr "Producteur de sirop"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_location_maxItem
+msgid "Maximum capacity"
+msgstr "Capacité maximale"
+
+#. module: stock_picking_from_stock_quants
+#: code:addons/stock_picking_from_stock_quants/wizard/stock_picking_from_stock_quants.py:203
+#: code:addons/stock_picking_from_stock_quants/wizard/stock_picking_from_stock_quants.py:317
+#, python-format
+msgid "More than one locations."
+msgstr "Plus d'un emplacement."
+
+#. module: stock_picking_from_stock_quants
+#: code:addons/stock_picking_from_stock_quants/wizard/stock_picking_from_stock_quants.py:197
+#, python-format
+msgid "More than one producer."
+msgstr "Plus d'un producteur."
+
+#. module: stock_picking_from_stock_quants
+#: code:addons/stock_picking_from_stock_quants/wizard/stock_picking_from_stock_quants.py:191
+#, python-format
+msgid "More than one product."
+msgstr "Plus d'un produit."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.quant_search_view
+msgid "Negative"
+msgstr "Négatif"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.actions.server,name:stock_picking_from_stock_quants.action_create_classification_srv
+msgid "New Classification"
+msgstr "Nouvelle Classification"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.actions.server,name:stock_picking_from_stock_quants.action_create_picking_from_quants_srv
+msgid "New picking"
+msgstr "Transférer"
+
+#. module: stock_picking_from_stock_quants
+#: code:addons/stock_picking_from_stock_quants/wizard/stock_picking_from_stock_quants.py:200
+#: code:addons/stock_picking_from_stock_quants/wizard/stock_picking_from_stock_quants.py:314
+#, python-format
+msgid "No locations."
+msgstr "Aucun emplacement."
+
+#. module: stock_picking_from_stock_quants
+#: code:addons/stock_picking_from_stock_quants/wizard/stock_picking_from_stock_quants.py:188
+#: code:addons/stock_picking_from_stock_quants/wizard/stock_picking_from_stock_quants.py:302
+#, python-format
+msgid "No product."
+msgstr "Aucun produit."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_type_single_product
+msgid "One Product"
+msgstr "Un produit"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_type_single_origin
+msgid "One origin"
+msgstr "Une origine"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_location_current_owner
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.quant_search_view
+msgid "Owner"
+msgstr "Propriétaire"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.quant_search_view
+msgid "Package"
+msgstr "Colis"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model,name:stock_picking_from_stock_quants.model_stock_pack_operation
+msgid "Packing Operation"
+msgstr "Packing Operation"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_picking_type_id
+msgid "Picking Type"
+msgstr "Tyoe de transfert"
+
+#. module: stock_picking_from_stock_quants
+#: code:addons/stock_picking_from_stock_quants/models/maple_sale.py:19
+#, python-format
+msgid ""
+"Please define income account for this product: \"%s\" (id:%d) - or for its "
+"category: \"%s\"."
+msgstr ""
+"SVP définir le compte de revenu pour ce produit: \"%s\" (id:%d) - ou pour sa "
+"catégorie: \"%s\"."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.quant_search_view
+msgid "Positive"
+msgstr "Positif"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_producer_present
+msgid "Producer present"
+msgstr "Producteur présent"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_picking_from_quants_maple_producer
+msgid "Producer. "
+msgstr "Producteur."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_location_current_product
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.quant_search_view
+msgid "Product"
+msgstr "Produit"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_location_current_rules
+msgid "Product Rules. "
+msgstr "Règles du produit."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_location_spaceLeft
+msgid "Product Space Left"
+msgstr "Espace disponible"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_lines_quant_id
+msgid "Product selected"
+msgstr "Produit sélectionné"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.stock_location_kanban
+msgid "Product:"
+msgstr "Produit:"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.stock_picking_from_stock_quants_view
+msgid "Products"
+msgstr "Produits"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_partner_state
+msgid "Province / State"
+msgstr "Province / État"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_location_purchase_lines
+msgid "Purchases"
+msgstr "Achats"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_picking_from_quants_quants_selected
+msgid "Qaunts. "
+msgstr "Articles."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.actions.act_window,name:stock_picking_from_stock_quants.quants_list_action
+#: model:ir.ui.menu,name:stock_picking_from_stock_quants.quant_list
+msgid "Quant List"
+msgstr "Liste d'articles"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_location_qty_purchased
+msgid "Quantity Purchased"
+msgstr "Qté. achetée"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_location_lbs_stock
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_location_qty_stock
+msgid "Quantity Stock"
+msgstr "Qté. inventoriée"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.actions.act_window,name:stock_picking_from_stock_quants.act_quant_location_open
+#: model:ir.model,name:stock_picking_from_stock_quants.model_stock_quant
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_lines_picking_from_quant_id
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_quants_selected
+msgid "Quants"
+msgstr "Articles"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_quants_line
+msgid "Quants Lines"
+msgstr "Lignes d'articles"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.stock_picking_from_stock_quants_view
+msgid "Quants selected"
+msgstr "Articles sélectionnés"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_partner_region
+msgid "Region"
+msgstr "Région"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_related_ids
+msgid "Related"
+msgstr "Relié"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_location_current_rules
+msgid "Rules"
+msgstr "Règles"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model,name:stock_picking_from_stock_quants.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de commande"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_lines_quant_serial
+msgid "Serial"
+msgstr "Série"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_picking_from_quants_location_source_id
+msgid "Source Location Zone"
+msgstr "Emplacement d'origine"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,field_description:stock_picking_from_stock_quants.field_stock_location_stock_lines
+msgid "Stock"
+msgstr "Inventaire"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model,name:stock_picking_from_stock_quants.model_stock_move
+msgid "Stock Move"
+msgstr "Mouvement d'inventaire"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.stock_picking_from_stock_quants_view
+msgid "Stock Picking"
+msgstr "Transfert d'articles"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_location_stock_lines
+msgid "Stock for that location. "
+msgstr "Inventaire pour cet emplacement."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_location_purchase_lines
+msgid "Stock purchase planed for that location. "
+msgstr "Achats planifiés d'inventaire pour cet emplacement."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_location_spaceLeft
+msgid "The empty product space in that location. "
+msgstr "L'espace vide disponible dans cet emplacement."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_location_maxItem
+msgid "The maximum count of product that can be put in that location. "
+msgstr "Capacité maximale de produits stockables dans cet emplacement."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model,name:stock_picking_from_stock_quants.model_stock_picking_type
+msgid "The picking type determines the picking view"
+msgstr "Le type de transfert détermine la vue."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model,name:stock_picking_from_stock_quants.model_stock_picking
+msgid "Transfer"
+msgstr "Transférer"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.quant_search_view
+msgid "Transit Locations"
+msgstr "Emplacements de transits"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model.fields,help:stock_picking_from_stock_quants.field_stock_picking_from_quants_lines_quant_serial
+msgid "Unique Lot/Serial Number"
+msgstr "Lot/numéro de série unique"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.view_picking_type_form
+msgid "Validations"
+msgstr "Validations"
+
+#. module: stock_picking_from_stock_quants
+#: code:addons/stock_picking_from_stock_quants/models/stock_quant.py:140
+#, python-format
+msgid "You cannot move to a location of type view %s."
+msgstr "Vous ne pouvez déplacer à un emplacement de type vue %s."
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.ui.view,arch_db:stock_picking_from_stock_quants.stock_picking_from_stock_quants_view
+msgid "or"
+msgstr "ou"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model,name:stock_picking_from_stock_quants.model_stock_picking_from_quants
+msgid "stock.picking_from_quants"
+msgstr "stock.picking_from_quants"
+
+#. module: stock_picking_from_stock_quants
+#: model:ir.model,name:stock_picking_from_stock_quants.model_stock_picking_from_quants_lines
+msgid "stock.picking_from_quants.lines"
+msgstr "stock.picking_from_quants.lines"
