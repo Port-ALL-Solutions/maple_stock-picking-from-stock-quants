@@ -250,26 +250,26 @@ class PickingFromQuantsWizard(models.TransientModel):
         picking.action_confirm()
         picking.action_assign()
 
-#         selected_lots = quant_obj.browse(active_ids)
-#         
-#         for move in picking.move_lines:  
-#             autopick_lots = move.reserved_quant_ids
-#             for lot in autopick_lots:
-#                 if lot not in selected_lots:
-#                     lot.write({'reservation_id': False})
-#             for lot in selected_lots:
-#                 if not lot.reservation_id:
-#                     quants = quant_obj.quants_get_preferred_domain(lot.qty, move, lot_id=lot.lot_id.id)
-#     #                quants = quant_obj.quants_get_preferred_domain(lot.qty, move, ops=ops, lot_id=lot.lot_id, domain=domain, preferred_domain_list=[])
-#                     lot.quants_reserve(quants, move)
-# 
-#         for ops in picking.pack_operation_product_ids:            
-#             ops.write({'owner_id': partners[0].id})
-#             ops_lots = ops.pack_lot_ids
-#             x = 0
-#             for lot in ops_lots:
-#                 lot.write({'lot_id': selected_lots[x].lot_id.id})
-#                 x += 1
+        selected_lots = quant_obj.browse(active_ids)
+         
+        for move in picking.move_lines:  
+            autopick_lots = move.reserved_quant_ids
+            for lot in autopick_lots:
+                if lot not in selected_lots:
+                    lot.write({'reservation_id': False})
+            for lot in selected_lots:
+                if not lot.reservation_id:
+                    quants = quant_obj.quants_get_preferred_domain(lot.qty, move, lot_id=lot.lot_id.id)
+    #                quants = quant_obj.quants_get_preferred_domain(lot.qty, move, ops=ops, lot_id=lot.lot_id, domain=domain, preferred_domain_list=[])
+                    lot.quants_reserve(quants, move)
+ 
+        for ops in picking.pack_operation_product_ids:            
+            ops.write({'owner_id': partners[0].id})
+            ops_lots = ops.pack_lot_ids
+            x = 0
+            for lot in ops_lots:
+                lot.write({'lot_id': selected_lots[x].lot_id.id})
+                x += 1
             
         return {'type': 'ir.actions.act_window_close'}
 
