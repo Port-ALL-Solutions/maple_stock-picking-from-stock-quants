@@ -170,8 +170,8 @@ class PickingFromQuantsWizard(models.TransientModel):
         if len (products) > 1:
              raise UserError(_("More than one product."))
         
-        if not partners:
-             raise UserError(_("No producer."))
+#         if not partners:
+#              raise UserError(_("No producer."))
 
         if len (partners) > 1:
              raise UserError(_("More than one producer."))
