@@ -251,25 +251,44 @@ class PickingFromQuantsWizard(models.TransientModel):
         picking.action_assign()
 
         selected_lots = quant_obj.browse(active_ids)
-         
+#         
         for move in picking.move_lines:  
             autopick_lots = move.reserved_quant_ids
+            lots_to_remove = []
+
             for lot in autopick_lots:
                 if lot not in selected_lots:
+                    lots_to_remove.append(lot.lot_id)
                     lot.write({'reservation_id': False})
+
+            lots_to_add = []
             for lot in selected_lots:
                 if not lot.reservation_id:
+                    lots_to_add.append(lot.lot_id)
                     quants = quant_obj.quants_get_preferred_domain(lot.qty, move, lot_id=lot.lot_id.id)
     #                quants = quant_obj.quants_get_preferred_domain(lot.qty, move, ops=ops, lot_id=lot.lot_id, domain=domain, preferred_domain_list=[])
                     lot.quants_reserve(quants, move)
- 
+                    
+                    pack_ops = picking.pack_operation_ids[0]
+                    
+# 
         for ops in picking.pack_operation_product_ids:            
-            ops.write({'owner_id': partners[0].id})
+#            ops.write({'owner_id': partners[0].id})
             ops_lots = ops.pack_lot_ids
-            x = 0
-            for lot in ops_lots:
-                lot.write({'lot_id': selected_lots[x].lot_id.id})
-                x += 1
+            for ops_lot in ops_lots:
+                lot_vals = {}
+                quant_vals = {}
+                if ops_lot.lot_id in lots_to_remove:
+                    lot_to_add = lots_to_add.pop()
+                    lot_vals.update ({'lot_id': lot_to_add.quant_ids[0].lot_id.id})
+                    ops_lot.write(lot_vals)
+                if self.producer_present: 
+                    quant_vals.update ({'producer_present': self.producer_present})
+                if self.tmp_controller: 
+                    quant_vals.update ({'controler': self.tmp_controller.id})
+                if quant_vals:
+                    for q in ops_lot.lot_id.quant_ids:
+                        q.write(quant_vals)
             
         return {'type': 'ir.actions.act_window_close'}
 
